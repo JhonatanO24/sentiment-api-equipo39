@@ -33,6 +33,19 @@ class SentimentResponseExplain(BaseModel):
 
 @app.post("/sentiment", response_model=SentimentResponse)
 def predict_sentiment(request: SentimentRequest):
+    """
+    Hace una predicción con probabilidad del sentimiento de un texto
+
+    Args:
+        request (SentimentRequest): Formato de solicitud enviada desde el backend
+
+    Returns:
+        prevision (str): Predicción Binaria, 'Positivo' o 'Negativo'
+        probabilidad (float): Grado de confianza del modelo de su predicción
+
+    Raises:
+        HTTPException: Si el texto es menor a 10 caracteres.
+    """
     texto = request.text.strip()
 
     if len(texto) < 10:
@@ -56,6 +69,22 @@ def predict_sentiment(request: SentimentRequest):
 
 @app.post("/sentiment-explain", response_model=SentimentResponseExplain)
 def predict_sentiment_explain(request: SentimentRequest):
+    """
+    Hace una predicción con probabilidad y palabras clave del sentimiento de un texto.
+    Incluye un umbral para máximizar la cantidad de reseñas negativas correctamente clasificadas
+    y que a la vez no aumenten demasiado las reseñas positivas incorrectamente clasificadas.
+
+    Args:
+        request (SentimentRequest): Formato de solicitud enviada desde el backend
+
+    Returns:
+        prevision (str): Predicción Binaria, 'Positivo' o 'Negativo'
+        probabilidad (float): Grado de confianza del modelo de su predicción
+        palabras_clave (List[str]): Lista de hasta 3 palabras con más peso para la predicción
+
+    Raises:
+        HTTPException: Si el texto es menor a 10 caracteres.
+    """
     texto = request.text.strip()
 
     if len(texto) < 10:
