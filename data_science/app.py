@@ -12,7 +12,7 @@ app = FastAPI(title="Sentiment Analysis API")
 # Cargar el modelo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.4.joblib")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.8.joblib")
 
 if not os.path.exists(MODEL_PATH):
     raise Exception(f"No se encontró el archivo del modelo en: {MODEL_PATH}")
@@ -96,7 +96,7 @@ def predict_sentiment_explain(request: SentimentRequest):
     proba = modelo.predict_proba([texto])[0]
     prob_positivo = proba[1]
     
-    UMBRAL = 0.65 #El mejor obtenido en el notebook
+    UMBRAL = 0.51 #El mejor obtenido en el notebook
 
     if prob_positivo > UMBRAL:
         sentimiento = "Positivo"
