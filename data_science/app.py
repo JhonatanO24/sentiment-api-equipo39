@@ -12,7 +12,7 @@ app = FastAPI(title="Sentiment Analysis API")
 # Cargar el modelo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.4.joblib")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.9.joblib")
 
 if not os.path.exists(MODEL_PATH):
     raise Exception(f"No se encontró el archivo del modelo en: {MODEL_PATH}")
