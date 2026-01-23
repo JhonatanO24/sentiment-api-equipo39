@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 <<<<<<< HEAD
 MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.8.joblib")
 =======
-MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.9.joblib")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "sentiment_model_1.8.joblib")
 >>>>>>> b065d24f84fb82611aed66fb708b41f481710c7f
 
 if not os.path.exists(MODEL_PATH):
