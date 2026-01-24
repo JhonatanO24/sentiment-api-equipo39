@@ -94,6 +94,9 @@ def predict_sentiment_explain(request: SentimentRequest):
         HTTPException: Si el texto es menor a 10 caracteres.
     """
     texto = request.text.strip().replace(r'[^a-záéíóúñü\s]', '',)
+    texto = texto.lower()
+    texto = texto.replace(r'(.)\1{2,}', r'\1\1')
+    texto = texto.replace(r'\s+', ' ').strip()
 
     if len(texto) < 10:
         raise HTTPException(
