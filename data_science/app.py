@@ -27,6 +27,7 @@ class SentimentResponse(BaseModel):
     probabilidad: float
     
 class SentimentResponseExplain(BaseModel):
+    original_text: str
     prevision: str
     probabilidad: float
     palabras_clave: List[str]
@@ -64,12 +65,22 @@ def predict_sentiment(request: SentimentRequest):
 
     pred = modelo.predict([texto])[0]
     proba = modelo.predict_proba([texto])[0]
+    prob_positivo = proba[1]
 
     probabilidad_max = float(np.max(proba))
 
-    sentimiento = "Positivo" if pred == 1 else "Negativo"
+    UMBRAL = 0.51 #El mejor obtenido en el notebook
+    
+    if prob_positivo > UMBRAL:
+        sentimiento = "Positivo"
+        confianza_final = prob_positivo 
+    else:
+        sentimiento = "Negativo"
+        confianza_final = proba[0]
+
 
     return {
+        "original_text": texto,
         "prevision": sentimiento,
         "probabilidad": round(probabilidad_max, 3)
     }
@@ -93,10 +104,15 @@ def predict_sentiment_explain(request: SentimentRequest):
     Raises:
         HTTPException: Si el texto es menor a 10 caracteres.
     """
-    texto = request.text.strip().replace(r'[^a-záéíóúñü\s]', '',)
-    texto = texto.lower()
-    texto = texto.replace(r'(.)\1{2,}', r'\1\1')
-    texto = texto.replace(r'\s+', ' ').strip()
+    # 1. Definimos los caracteres con tilde y sus reemplazos
+    tildes = "áéíóúüÁÉÍÓÚÜ"
+    sin_tildes = "aeiouuAEIOUU"
+    
+    # 2. Creamos una tabla de traducción
+    tabla = str.maketrans(tildes, sin_tildes)
+    
+    # 3. Aplicamos la traducción
+    texto = request.text.strip().translate(tabla)
 
     if len(texto) < 10:
         raise HTTPException(
