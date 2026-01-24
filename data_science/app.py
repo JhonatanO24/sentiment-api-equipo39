@@ -135,6 +135,7 @@ def predict_sentiment_explain(request: SentimentRequest):
     palabras_clave = explicar_prediccion(modelo, texto, sentimiento)
 
     return {
+        "original_text": texto,
         "prevision": sentimiento,
         "probabilidad": round(float(confianza_final), 3),
         "palabras_clave": palabras_clave
