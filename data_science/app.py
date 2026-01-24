@@ -46,7 +46,15 @@ def predict_sentiment(request: SentimentRequest):
     Raises:
         HTTPException: Si el texto es menor a 10 caracteres.
     """
-    texto = request.text.strip()
+    # 1. Definimos los caracteres con tilde y sus reemplazos
+    tildes = "áéíóúüÁÉÍÓÚÜ"
+    sin_tildes = "aeiouuAEIOUU"
+    
+    # 2. Creamos una tabla de traducción
+    tabla = str.maketrans(tildes, sin_tildes)
+    
+    # 3. Aplicamos la traducción
+    texto = request.text.strip().translate(tabla)
 
     if len(texto) < 10:
         raise HTTPException(
@@ -85,7 +93,7 @@ def predict_sentiment_explain(request: SentimentRequest):
     Raises:
         HTTPException: Si el texto es menor a 10 caracteres.
     """
-    texto = request.text.strip()
+    texto = request.text.strip().replace(r'[^a-záéíóúñü\s]', '',)
 
     if len(texto) < 10:
         raise HTTPException(
