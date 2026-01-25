@@ -23,6 +23,7 @@ class SentimentRequest(BaseModel):
     text: str
 
 class SentimentResponse(BaseModel):
+    original_text: str
     prevision: str
     probabilidad: float
     
