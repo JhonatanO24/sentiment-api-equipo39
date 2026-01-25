@@ -3,7 +3,9 @@ def explicar_prediccion(modelo, texto_entrada, prediccion_etiqueta):
     """
     Devuelve las palabras que fueron más significativas en la decisión.
     """
-    vectorizador = modelo.named_steps['tfidf']
+    feature_union = modelo.steps[0][1]
+    transformadores = dict(feature_union.transformer_list)
+    vectorizador = transformadores['word_tfidf']
     clasificador = modelo.named_steps['clf']
     top_palabras = vectorizador.get_feature_names_out()
 
