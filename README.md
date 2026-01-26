@@ -329,11 +329,17 @@ Este proyecto está licenciado bajo la **MIT License** - ver el archivo [LICENSE
 ## 🙏 Agradecimientos
 
 **Gracias a todos los contribuidores**
+💻 Mario Fernando Perez Martinez
+
+💻 Bladimir Antonio Ventura Paniagua
+
+💻 Jhonatan Osorio
+
+💻 Víctor Hugo Bardales Pérez
 
 💻 Yohan Sebastian Ospina Gonzalez
 
 💻 Julio Alejandro Serrepe Ramírez
-
 
 **y a la comunidad Oracle ONE**
 
